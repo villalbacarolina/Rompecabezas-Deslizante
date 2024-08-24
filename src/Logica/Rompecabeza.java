@@ -15,6 +15,28 @@ public class Rompecabeza {
         desordenarPiezasAleatoriamente();
         eliminarUltimaPieza();
     }
+    
+    public boolean piezasOrdenadasYUltimaPiezaNull() {
+        boolean ordenada = true;
+        int numeroDeOrdenEsperado = 0;
+
+        for (int fil = 0; fil < piezas.length; fil++)
+            for (int col = 0; col < piezas[0].length; col++) {
+                Pieza piezaActual = piezas[fil][col];
+                int ultimaColumna = piezas[0].length-1;
+                int ultimaFila = piezas.length-1;
+                
+                if (fil==ultimaFila && col==ultimaColumna)
+                    if (piezaActual != null) 
+                        ordenada = false;
+                else
+                    if (piezaActual==null || piezaActual.getNumeroDeOrden()!=numeroDeOrdenEsperado)
+                        ordenada = false;
+
+                numeroDeOrdenEsperado++;
+            }
+        return ordenada;
+    }
 
 	private void desordenarPiezasAleatoriamente() {
     	int filas = piezas.length;
@@ -45,7 +67,7 @@ public class Rompecabeza {
         return resultado;
     }
     
-    public void eliminarUltimaPieza() {
+    private void eliminarUltimaPieza() {
         int filas = piezas.length;
         int columnas = piezas[0].length;
 

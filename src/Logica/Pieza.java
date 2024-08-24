@@ -8,5 +8,9 @@ public class Pieza {
 		this.numeroDeOrden = numeroDeOrden;
 	}
 	
+	public int getNumeroDeOrden() {
+		return numeroDeOrden;
+	}
+	
 	
 }
