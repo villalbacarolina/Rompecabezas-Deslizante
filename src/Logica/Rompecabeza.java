@@ -13,7 +13,7 @@ public class Rompecabeza {
             throw new IllegalArgumentException("La cantidad de piezas '" + cantidadPiezas + "' es inválida. Debe estar entre 3 y 10.");
         piezas = new Pieza[cantidadPiezas][cantidadPiezas];
         desordenarPiezasAleatoriamente();
-        eliminarPiezaAleatoriamente();
+        eliminarUltimaPieza();
     }
 
 	private void desordenarPiezasAleatoriamente() {
@@ -45,14 +45,13 @@ public class Rompecabeza {
         return resultado;
     }
     
-    public void eliminarPiezaAleatoriamente() {
-        Random random = new Random();
+    public void eliminarUltimaPieza() {
         int filas = piezas.length;
         int columnas = piezas[0].length;
 
-        int filaAleatoria = random.nextInt(filas);
-        int columnaAleatoria = random.nextInt(columnas);
+        int ultimaFila = filas - 1;
+        int ultimaColumna = columnas - 1;
 
-        piezas[filaAleatoria][columnaAleatoria] = null;
+        piezas[ultimaFila][ultimaColumna] = null;
     }
 }
