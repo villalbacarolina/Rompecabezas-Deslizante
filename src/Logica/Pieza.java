@@ -2,15 +2,18 @@ package Logica;
 
 public class Pieza {
 	
-	int numeroDeOrden;
+	Integer numeroDeOrden;
 
-	public Pieza(int numeroDeOrden) {
+	public Pieza(Integer numeroDeOrden) {
 		this.numeroDeOrden = numeroDeOrden;
 	}
 	
-	public int getNumeroDeOrden() {
-		return numeroDeOrden;
+	public Integer getNumero() {
+		return this.numeroDeOrden;
 	}
 	
-	
+	public void setNumero(Integer nuevoNumero) {
+		this.numeroDeOrden = nuevoNumero;
+	}
+
 }
