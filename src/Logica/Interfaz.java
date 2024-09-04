@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 
@@ -20,7 +22,7 @@ public class Interfaz {
 	private void initialize() {
 		this.logicaJuego = new Juego();
 		this.botones = new JButton[4][4];
-
+		
 		frameJuego = new JFrame();
 		frameJuego.getContentPane().setBackground(new Color(128, 128, 128));
 		frameJuego.setBounds(100, 100, 860, 800);
@@ -116,7 +118,7 @@ public class Interfaz {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	logicaJuego.desordenarRompecabeza();
-				setEventosBotonesPiezas();
+		    	setEventosBotonesPiezas();
 				actualizarMatriz();
 		    }
 		});
@@ -127,10 +129,14 @@ public class Interfaz {
 		for(int fila = 0 ; fila< this.botones.length;fila++) {
 			for(int columna = 0; columna < this.botones[fila].length;columna++) {
 				String numero = logicaJuego.obtenerNumeroPieza(fila, columna);
+				ImageIcon img = logicaJuego.obtenerImagenPieza(Integer.parseInt(numero));
 				if(numero.equals("0")) {
 					this.botones[fila][columna].setText("");
+					this.botones[fila][columna].setIcon(img);
+					
 				}else {
 					this.botones[fila][columna].setText(numero);
+					this.botones[fila][columna].setIcon(img);
 				}
 			}
 		}

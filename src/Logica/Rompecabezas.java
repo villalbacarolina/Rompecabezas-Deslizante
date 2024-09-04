@@ -3,14 +3,29 @@ package Logica;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.ImageIcon;
+
 public class Rompecabezas {
 
 	private Pieza[][] piezas;
-
+	private ArrayList<ImageIcon>imagenesPiezas;
     Rompecabezas() {
         piezas = new Pieza[4][4];
+        imagenesPiezas = new ArrayList<ImageIcon>();
+        llenarArregloImg();
         inicializarPiezas();
     }
+    
+    public void llenarArregloImg() {
+    	
+    	imagenesPiezas.add(0, null);
+    	for (int i =1; i<16;i++) 
+    	{
+    		imagenesPiezas.add(i,new ImageIcon(getClass().getResource("/img/"+i+".jpg")));
+    	}
+    	
+    }
+    
     
 	public boolean juegoTerminado() {
 		Rompecabezas rompecabezaOrdenado = new Rompecabezas();
@@ -31,14 +46,14 @@ public class Rompecabezas {
     	int numeroPieza = 0;
 		for (int fil = 0; fil < piezas.length; fil++) {
 			for (int col = 0; col < piezas[0].length; col++) {
-				Pieza p = new Pieza(numeroPieza);
+				Pieza p = new Pieza(numeroPieza,imagenesPiezas.get(numeroPieza));
 				piezas[fil][col] = p;
 				numeroPieza++;
 			}
 		}
 
 	}
-
+	
 	public void desordenarPiezas() {
 		
 		ArrayList<Integer> numerosDesordenados = new ArrayList<Integer>();
@@ -55,6 +70,7 @@ public class Rompecabezas {
 		for (int f = 0; f < this.piezas.length; f++) {
 		    for (int c = 0; c < this.piezas[f].length; c++) {
 		        this.piezas[f][c].setNumero(numerosDesordenados.get(indexNumerosDesordenados));
+		        this.piezas[f][c].setImagenPieza(imagenesPiezas.get(numerosDesordenados.get(indexNumerosDesordenados)));
 		        indexNumerosDesordenados++;
 		    }
 		}
@@ -63,6 +79,8 @@ public class Rompecabezas {
 	
 	public void intercambiarConVacio(String numeroBuscar) {
 		Integer numeroA_Integer;
+		
+		if (numeroBuscar!="") {
 		numeroA_Integer = Integer.parseInt(numeroBuscar);
 
 		boolean termino=false;
@@ -82,6 +100,7 @@ public class Rompecabezas {
 			if(termino) {
 				break;
 			}
+		}
 		}
 
 	}
@@ -117,6 +136,10 @@ public class Rompecabezas {
 			return null;
 		}
 		return this.piezas[f][c];
+	}
+	
+	public ImageIcon obtenerImagen(int numero) {
+		return imagenesPiezas.get(numero);
 	}
 	
 	public void imprimirMatriz() {
