@@ -9,26 +9,39 @@ public class Rompecabezas {
 
 	private Pieza[][] piezas;
 	private ArrayList<ImageIcon>imagenesPiezas;
-    Rompecabezas() {
+	
+    Rompecabezas(int numeroTablero) {
         piezas = new Pieza[4][4];
         imagenesPiezas = new ArrayList<ImageIcon>();
-        llenarArregloImg();
+        llenarArregloImg(numeroTablero);
         inicializarPiezas();
     }
     
-    public void llenarArregloImg() {
+    public void llenarArregloImg(int numeroTablero) {
     	
     	imagenesPiezas.add(0, null);
-    	for (int i =1; i<16;i++) 
-    	{
-    		imagenesPiezas.add(i,new ImageIcon(getClass().getResource("/img/"+i+".jpg")));
-    	}
     	
+		if(numeroTablero==1) {
+	    	for (int i =0; i<16;i++) {
+	    		imagenesPiezas.add(i,new ImageIcon(getClass().getResource("/srcimg1/"+i+".jpg")));
+	    	}
+		}	
+		
+		if(numeroTablero==2) {
+	    	for (int i =0; i<16;i++) {
+	    		imagenesPiezas.add(i,new ImageIcon(getClass().getResource("/srcimg2/"+i+".jpg")));
+	    	}
+		}
+		
+		if(numeroTablero==3) {
+	    	for (int i =0; i<16;i++) {
+	    		imagenesPiezas.add(i,new ImageIcon(getClass().getResource("/srcimg3/"+i+".jpg")));
+	    	}
+		}
     }
     
-    
 	public boolean juegoTerminado() {
-		Rompecabezas rompecabezaOrdenado = new Rompecabezas();
+		Rompecabezas rompecabezaOrdenado = new Rompecabezas(1);
 		for (int fil = 0; fil < piezas.length; fil++)
 			for (int col = 0; col < piezas[0].length; col++){
 					if(this.piezas[fil][col].getNumero() != rompecabezaOrdenado.obtenerPiezas()[fil][col].getNumero()) {

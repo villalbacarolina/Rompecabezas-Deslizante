@@ -6,8 +6,8 @@ public class Juego {
 	
 	Rompecabezas rompecabeza;
 	
-	Juego() {
-		this.rompecabeza = new Rompecabezas();
+	public Juego(int numeroTablero) {
+		this.rompecabeza = new Rompecabezas(numeroTablero);
 	}
 
 	public void desordenarRompecabeza() {

@@ -1,26 +1,32 @@
-package Logica;
+package Interfaz;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.Icon;
+
+import Logica.Juego;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 
-public class Interfaz {
+public class juegoInterfaz {
+	
 	private Juego logicaJuego;
 	private JButton[][] botones;
 	private JFrame frameJuego;
-
-	public Interfaz() {
-		initialize();
+	
+	public juegoInterfaz(int numTablero) {
+		initialize(numTablero);
 	}
 
-	private void initialize() {
-		this.logicaJuego = new Juego();
+	public void visible(boolean b) {
+		this.frameJuego.setVisible(b);
+	}
+ 
+	private void initialize(int numTablero) {
+		this.logicaJuego = new Juego(numTablero);
 		this.botones = new JButton[4][4];
 		
 		frameJuego = new JFrame();
@@ -114,6 +120,11 @@ public class Interfaz {
 		frameJuego.getContentPane().add(Empezar);
 		Empezar.setText("Empezar");
 		
+		JButton btnMenu = new JButton();
+		btnMenu.setText("Menu");
+		btnMenu.setBounds(21, 700, 96, 50);
+		frameJuego.getContentPane().add(btnMenu);
+		
 		Empezar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
@@ -123,6 +134,19 @@ public class Interfaz {
 		    }
 		});
 
+		btnMenu.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+				try {
+			    	MenuInterfaz menuPrincipal = new MenuInterfaz();
+			    	menuPrincipal.visible(true);
+			    	visible(false);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+		    }
+		});
+		
 	}
 	
 	public void actualizarMatriz() {
@@ -157,24 +181,19 @@ public class Interfaz {
 						actualizarMatriz();
 						if(ganoJuego()) {
 							frameJuego.setVisible(false);
+							try {
+								MenuInterfaz MI = new MenuInterfaz();
+								MI.visible(true);
+						    	visible(false);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+
 						}
 				    }
 				});
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interfaz window = new Interfaz();
-					window.frameJuego.setVisible(true);
-					window.actualizarMatriz();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 }
