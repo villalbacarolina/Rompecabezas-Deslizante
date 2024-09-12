@@ -10,12 +10,15 @@ import Logica.Juego;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class juegoInterfaz {
-	
+	private int numImgTablero;
 	private Juego logicaJuego;
 	private JButton[][] botones;
 	private JFrame frameJuego;
+	private JLabel contadorMovimientos;
 	
 	public juegoInterfaz(int numTablero) {
 		initialize(numTablero);
@@ -27,6 +30,7 @@ public class juegoInterfaz {
  
 	private void initialize(int numTablero) {
 		this.logicaJuego = new Juego(numTablero);
+		this.numImgTablero= numTablero;
 		this.botones = new JButton[4][4];
 		
 		frameJuego = new JFrame();
@@ -125,12 +129,21 @@ public class juegoInterfaz {
 		btnMenu.setBounds(21, 700, 96, 50);
 		frameJuego.getContentPane().add(btnMenu);
 		
+		JLabel lblNewLabel = new JLabel("Movimientos");
+		lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 18));
+		lblNewLabel.setBounds(573, 710, 222, 32);
+		frameJuego.getContentPane().add(lblNewLabel);
+		lblNewLabel.setText("Movimientos: " + this.logicaJuego.getContadorMovimientos());
+		this.contadorMovimientos=lblNewLabel;
+		
 		Empezar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	logicaJuego.desordenarRompecabeza();
 		    	setEventosBotonesPiezas();
 				actualizarMatriz();
+				logicaJuego.setContadorMovimientos(0);
+				contadorMovimientos.setText("Movimientos: "+ logicaJuego.getContadorMovimientos());
 		    }
 		});
 
@@ -155,12 +168,12 @@ public class juegoInterfaz {
 				String numero = logicaJuego.obtenerNumeroPieza(fila, columna);
 				ImageIcon img = logicaJuego.obtenerImagenPieza(Integer.parseInt(numero));
 				if(numero.equals("0")) {
-					this.botones[fila][columna].setText("");
 					this.botones[fila][columna].setIcon(img);
+					this.botones[fila][columna].setText("");
 					
 				}else {
-					this.botones[fila][columna].setText(numero);
 					this.botones[fila][columna].setIcon(img);
+					this.botones[fila][columna].setText(numero);
 				}
 			}
 		}
@@ -177,13 +190,18 @@ public class juegoInterfaz {
 				boton.addActionListener(new ActionListener() {
 				    @Override
 				    public void actionPerformed(ActionEvent e) {
+				    	
 				        logicaJuego.moverPieza(boton.getText());
 						actualizarMatriz();
+						contadorMovimientos.setText("Movimientos: "+ logicaJuego.getContadorMovimientos());
+						
 						if(ganoJuego()) {
 							frameJuego.setVisible(false);
 							try {
-								MenuInterfaz MI = new MenuInterfaz();
-								MI.visible(true);
+								pantallaGanaste pG = new pantallaGanaste();
+								pG.setMovimientos(logicaJuego.getContadorMovimientos());
+								pG.setImgTablero(numImgTablero);
+								pG.visible(true);
 						    	visible(false);
 							} catch (Exception e1) {
 								e1.printStackTrace();
@@ -195,5 +213,4 @@ public class juegoInterfaz {
 			}
 		}
 	}
-
 }

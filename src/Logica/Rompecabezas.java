@@ -1,7 +1,6 @@
 package Logica;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.ImageIcon;
 
@@ -9,15 +8,17 @@ public class Rompecabezas {
 
 	private Pieza[][] piezas;
 	private ArrayList<ImageIcon>imagenesPiezas;
+	private int contadorMovimientos;
 	
     Rompecabezas(int numeroTablero) {
+    	this.contadorMovimientos=0;
         piezas = new Pieza[4][4];
         imagenesPiezas = new ArrayList<ImageIcon>();
         llenarArregloImg(numeroTablero);
         inicializarPiezas();
     }
     
-    public void llenarArregloImg(int numeroTablero) {
+    private void llenarArregloImg(int numeroTablero) {
     	
     	imagenesPiezas.add(0, null);
     	
@@ -68,24 +69,15 @@ public class Rompecabezas {
 	}
 	
 	public void desordenarPiezas() {
+		Pieza[][] piezasDesordenadas = ResolvedorRompecabezas.crearTableroResoluble(4);
+		this.piezas = piezasDesordenadas;
 		
-		ArrayList<Integer> numerosDesordenados = new ArrayList<Integer>();
-
-		for (int f = 0; f < this.piezas.length; f++) {
-		    for (int c = 0; c < this.piezas[f].length; c++) {
-		        numerosDesordenados.add(this.piezas[f][c].getNumero());
-		    }
-		}
-
-		Collections.shuffle(numerosDesordenados);
-		
-		int indexNumerosDesordenados = 0;
-		for (int f = 0; f < this.piezas.length; f++) {
-		    for (int c = 0; c < this.piezas[f].length; c++) {
-		        this.piezas[f][c].setNumero(numerosDesordenados.get(indexNumerosDesordenados));
-		        this.piezas[f][c].setImagenPieza(imagenesPiezas.get(numerosDesordenados.get(indexNumerosDesordenados)));
-		        indexNumerosDesordenados++;
-		    }
+		for(int f = 0; f<piezas.length;f++) {
+			for(int c = 0; c<piezas[0].length;c++) {
+				Pieza p = piezas[f][c];
+				int numeroPieza = p.getNumero();
+				p.setImagenPieza(imagenesPiezas.get(numeroPieza));
+			}
 		}
 		
 	}
@@ -138,6 +130,7 @@ public class Rompecabezas {
 				if(p.getNumero().compareTo(0)==0) {
 					p.setNumero(pIntercambiar.getNumero());
 					pIntercambiar.setNumero(0);
+					this.contadorMovimientos+=1;
 				}
 			}
 		}
@@ -155,19 +148,12 @@ public class Rompecabezas {
 		return imagenesPiezas.get(numero);
 	}
 	
-	public void imprimirMatriz() {
-	    for (int i = 0; i < piezas.length; i++) {
-	        System.out.print("| ");  
-	        for (int j = 0; j < piezas[i].length; j++) {
-	           
-	            if (piezas[i][j] == null) {
-	                System.out.print("  ");  
-	            } else {
-	                System.out.print(piezas[i][j].getNumero() + " ");
-	            }
-	        }
-	        System.out.println("|");
-	    }
+	public int obtenerContadorMovimientos() {
+		return this.contadorMovimientos;
+	}
+	
+	public void setContadorMovimientos(int n) {
+		this.contadorMovimientos=n;
 	}
 	
 }

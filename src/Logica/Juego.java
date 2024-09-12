@@ -3,7 +3,6 @@ package Logica;
 import javax.swing.ImageIcon;
 
 public class Juego {
-	
 	Rompecabezas rompecabeza;
 	
 	public Juego(int numeroTablero) {
@@ -31,4 +30,11 @@ public class Juego {
 		return rompecabeza.juegoTerminado();
 	}
 
+	public int getContadorMovimientos() {
+		return this.rompecabeza.obtenerContadorMovimientos();
+	}
+	
+	public void setContadorMovimientos(int n) {
+		this.rompecabeza.setContadorMovimientos(n);
+	}
 }
